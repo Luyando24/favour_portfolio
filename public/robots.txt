@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://david-araj.vercel.app/sitemap.xml
