@@ -102,7 +102,7 @@ export default function Home() {
                     title={PLAYER_INFO.fullName}
                     subtitle={PLAYER_INFO.position}
                     tagline={PLAYER_INFO.tagline}
-                    backgroundImage="/images/fe.jpg"
+                    backgroundImage="/images/cover.jpeg"
                 />
 
                 {/* Quick Stats Section */}
@@ -391,11 +391,11 @@ export default function Home() {
                             </div>
 
                             {/* Small Item 1 */}
-                            <div className="md:col-span-1 md:row-span-1 h-full">
+                            <div className="md:col-span-1 md:row-span-1 h-[200px] md:h-full">
                                 <Reveal width="100%" delay={0.4} variant="scale">
                                     <Link href="/photos" className="group relative block h-full rounded-3xl overflow-hidden border border-white/10 hover:border-benfica-red/50 transition-colors">
                                         <img
-                                            src={photos.length > 2 ? photos[2].url : "/gallery/photos/WhatsApp Image 2025-11-21 at 16.49.17_2fdb5d51.jpg"}
+                                            src={photos.length > 2 ? photos[2].url : "/gallery/photos/535709ca-08da-48a5-8de4-c503581dcbe6.JPG"}
                                             alt="Training"
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
@@ -459,7 +459,7 @@ export default function Home() {
                                         </MagneticButton>
                                     </div>
 
-                                    <div className="flex gap-10 relative z-10">
+                                    <div className="flex gap-4 md:gap-10 relative z-10 justify-center md:justify-start">
                                          <div className="text-center group/stat">
                                             <div className="text-5xl font-black text-white mb-2 group-hover/stat:text-benfica-gold transition-colors">{playerInfo?.age || PLAYER_INFO.age}</div>
                                             <div className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Age</div>

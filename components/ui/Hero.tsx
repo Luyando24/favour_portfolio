@@ -19,7 +19,7 @@ export default function Hero({
     title,
     subtitle,
     tagline,
-    backgroundImage = '/images/fe.jpg',
+    backgroundImage = '/images/cover.jpeg',
 }: HeroProps) {
     const handleDownloadPDF = () => {
         window.open('/api/download-pdf', '_blank');
@@ -51,13 +51,13 @@ export default function Hero({
                     src={backgroundImage}
                     alt={PLAYER_INFO.fullName}
                     fill
-                    className="object-cover scale-110" // Scale up slightly to avoid gaps during parallax
+                    className="object-cover"
                     priority
                     quality={90}
                 />
-                {/* Modern Gradient Overlay - Stronger on left for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-transparent z-10"></div>
-                <div className="absolute inset-0 bg-hero-gradient opacity-80 z-10"></div>
+                {/* Modern Gradient Overlay - Lighter for visibility */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-hero-gradient opacity-40 z-10"></div>
                 {/* Grid Pattern Overlay */}
                 <div className="absolute inset-0 bg-grid-pattern opacity-10 z-10 pointer-events-none"></div>
             </motion.div>
@@ -87,7 +87,7 @@ export default function Hero({
                             initial={{ x: -50, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
-                            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
+                            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl"
                         >
                             {firstName}
                         </motion.span>
@@ -96,7 +96,7 @@ export default function Hero({
                                 initial={{ x: -50, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.8, delay: 0.4 }}
-                                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-outline opacity-80"
+                                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-outline opacity-80"
                             >
                                 {middleName}
                             </motion.span>
@@ -105,7 +105,7 @@ export default function Hero({
                             initial={{ x: -50, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.8, delay: 0.5 }}
-                            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400"
+                            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400"
                         >
                             {lastName}
                         </motion.span>
