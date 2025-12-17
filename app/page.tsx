@@ -13,6 +13,7 @@ import { getPlayerStats, getCareerHighlights, getEducation, getHonours, getPhoto
 import { useEffect, useState } from 'react';
 import { Trophy, Target, Zap, GraduationCap, Award, Calendar, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
     const [technicalStats, setTechnicalStats] = useState(TECHNICAL_STATS);
@@ -359,10 +360,11 @@ export default function Home() {
                             <div className="md:col-span-2 md:row-span-2 h-full">
                                 <Reveal width="100%" delay={0.2} variant="scale">
                                     <Link href="/photos" className="group relative block h-full rounded-3xl overflow-hidden border border-white/10 hover:border-benfica-red/50 transition-colors">
-                                        <img
+                                        <Image
                                             src={photos.length > 0 ? photos[0].url : "/gallery/photos/WhatsApp Image 2025-11-21 at 16.49.22_a4a3c45a.jpg"}
                                             alt={photos.length > 0 ? (photos[0].caption || "Match Action") : "Match Action"}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                         <div className="absolute bottom-8 left-8">
@@ -377,10 +379,11 @@ export default function Home() {
                             <div className="md:col-span-1 md:row-span-2 h-full">
                                 <Reveal width="100%" delay={0.3} variant="scale">
                                     <Link href="/photos" className="group relative block h-full rounded-3xl overflow-hidden border border-white/10 hover:border-benfica-red/50 transition-colors">
-                                        <img
+                                        <Image
                                             src={photos.length > 1 ? photos[1].url : "/images/fe.jpg"}
                                             alt="In Action"
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                         <div className="absolute bottom-8 left-8">
@@ -394,10 +397,11 @@ export default function Home() {
                             <div className="md:col-span-1 md:row-span-1 h-[200px] md:h-full">
                                 <Reveal width="100%" delay={0.4} variant="scale">
                                     <Link href="/photos" className="group relative block h-full rounded-3xl overflow-hidden border border-white/10 hover:border-benfica-red/50 transition-colors">
-                                        <img
+                                        <Image
                                             src={photos.length > 2 ? photos[2].url : "/gallery/photos/535709ca-08da-48a5-8de4-c503581dcbe6.JPG"}
                                             alt="Training"
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                         <div className="absolute bottom-6 left-6">

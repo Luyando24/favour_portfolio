@@ -184,7 +184,7 @@ export default function AdminTestimonialsPage() {
                                         </div>
                                     ) : (
                                         <div className="relative z-10">
-                                            <p className="text-white text-lg italic mb-4">"{testimonial.text}"</p>
+                                            <p className="text-white text-lg italic mb-4">&quot;{testimonial.text}&quot;</p>
                                             <div className="flex items-center justify-between">
                                                 <div>
                                                     <h4 className="text-benfica-gold font-bold">{testimonial.coach}</h4>

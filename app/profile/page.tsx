@@ -180,9 +180,9 @@ export default function ProfilePage() {
                                         Her dedication to intensive training and performance excellence is evidenced by her impressive track record and ability to secure titles.
                                     </p>
                                     <div className="bg-black/30 border-l-4 border-benfica-red p-6 rounded-r-xl italic text-gray-200">
-                                        "Demonstrated by a career-high <span className="text-benfica-gold font-bold">30 goals scored</span> in the most recent season.
-                                        Possesses strong technical skills including dribbling, ball control, and passing accuracy, combined with tactical game awareness."
-                                    </div>
+            &quot;Demonstrated by a career-high <span className="text-benfica-gold font-bold">30 goals scored</span> in the most recent season.
+            Possesses strong technical skills including dribbling, ball control, and passing accuracy, combined with tactical game awareness.&quot;
+        </div>
                                 </div>
                             </div>
                         </Reveal>

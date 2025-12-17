@@ -56,8 +56,8 @@ export default function Hero({
                     quality={90}
                 />
                 {/* Modern Gradient Overlay - Lighter for visibility */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent z-10"></div>
-                <div className="absolute inset-0 bg-hero-gradient opacity-40 z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/30 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-hero-gradient opacity-20 z-10"></div>
                 {/* Grid Pattern Overlay */}
                 <div className="absolute inset-0 bg-grid-pattern opacity-10 z-10 pointer-events-none"></div>
             </motion.div>
