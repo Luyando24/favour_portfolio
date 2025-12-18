@@ -117,6 +117,7 @@ export interface PlayerInfo {
     whatsapp: string;
     instagram: string;
     youtube: string;
+    hero_image_url?: string;
     updated_at: string;
 }
 

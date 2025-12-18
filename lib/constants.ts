@@ -14,6 +14,7 @@ export const PLAYER_INFO = {
     whatsapp: '(+86) 18536223834',
     instagram: 'https://www.instagram.com/Favour_gentle',
     youtube: '', // No YouTube provided
+    heroImage: '/images/cover.jpeg',
 };
 
 // Character & Academic Data

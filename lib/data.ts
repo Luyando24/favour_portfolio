@@ -39,6 +39,7 @@ export interface UIPlayerInfo {
     whatsapp: string;
     instagram: string;
     youtube: string;
+    heroImage?: string;
 }
 
 export interface UIStat {
@@ -90,7 +91,8 @@ export async function fetchPlayerProfile(): Promise<UIPlayerInfo> {
                 phone: data.phone,
                 whatsapp: data.whatsapp,
                 instagram: data.instagram,
-                youtube: data.youtube
+                youtube: data.youtube,
+                heroImage: data.hero_image_url
             };
         }
     } catch (error) {

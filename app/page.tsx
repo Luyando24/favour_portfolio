@@ -84,7 +84,7 @@ export default function Home() {
                     title={playerInfo.fullName}
                     subtitle={playerInfo.position}
                     tagline={playerInfo.tagline}
-                    backgroundImage="/images/cover.jpeg"
+                    backgroundImage={playerInfo.heroImage || "/images/cover.jpeg"}
                 />
 
                 {/* Quick Stats Section */}

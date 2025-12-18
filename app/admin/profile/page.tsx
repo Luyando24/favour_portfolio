@@ -1,17 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import AdminSidebar from '@/components/admin/Sidebar';
-import { Save, RefreshCw, Loader2 } from 'lucide-react';
+import { Save, RefreshCw, Loader2, Upload, Trash2 } from 'lucide-react';
 import { supabase, PlayerInfo, getPlayerInfo, updatePlayerInfo } from '@/lib/supabase';
+import Image from 'next/image';
 
 export default function AdminProfilePage() {
     const [info, setInfo] = useState<PlayerInfo | null>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const fetchInfo = async () => {
         setLoading(true);
@@ -76,6 +79,44 @@ export default function AdminProfilePage() {
         setInfo({ ...info, [field]: array });
     };
 
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files || e.target.files.length === 0 || !info) return;
+        
+        const file = e.target.files[0];
+        setUploading(true);
+        setError(null);
+
+        try {
+            // 1. Upload to Storage
+            const fileExt = file.name.split('.').pop();
+            const fileName = `hero_${Math.random().toString(36).substring(2)}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('photos')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            // 2. Get Public URL
+            const { data: { publicUrl } } = supabase.storage
+                .from('photos')
+                .getPublicUrl(filePath);
+
+            // 3. Update local state (will be saved to DB on form submit or immediately?)
+            // Let's save immediately for better UX on file uploads usually, or just set state.
+            // Setting state means user has to click save. Let's do that to be consistent with other fields.
+            setInfo({ ...info, hero_image_url: publicUrl });
+            
+        } catch (err: any) {
+            console.error(err);
+            setError('Failed to upload image: ' + (err.message || err));
+        } finally {
+            setUploading(false);
+            if (fileInputRef.current) fileInputRef.current.value = '';
+        }
+    };
+
     if (loading) {
         return (
             <ProtectedRoute>
@@ -122,6 +163,60 @@ export default function AdminProfilePage() {
                             )}
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Hero Image Section */}
+                                <div className="md:col-span-2 space-y-4">
+                                    <h3 className="text-lg font-bold text-white border-b border-gray-800 pb-2">Hero Image</h3>
+                                    <div className="flex items-start gap-6">
+                                        <div className="relative w-48 h-32 bg-gray-800 rounded-lg overflow-hidden border border-gray-700 flex-shrink-0">
+                                            {info?.hero_image_url ? (
+                                                <Image
+                                                    src={info.hero_image_url}
+                                                    alt="Hero"
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            ) : (
+                                                <div className="flex items-center justify-center h-full text-gray-500 text-sm">
+                                                    No Image
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="flex-1">
+                                            <p className="text-gray-400 text-sm mb-3">
+                                                Upload a new image for the hero section. Recommended size: 1920x1080.
+                                            </p>
+                                            <div className="flex gap-3">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => fileInputRef.current?.click()}
+                                                    disabled={uploading}
+                                                    className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                                                >
+                                                    {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                                                    Upload New
+                                                </button>
+                                                {info?.hero_image_url && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setInfo({ ...info, hero_image_url: undefined })}
+                                                        className="bg-red-900/20 hover:bg-red-900/40 text-red-500 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                        Remove
+                                                    </button>
+                                                )}
+                                            </div>
+                                            <input
+                                                type="file"
+                                                ref={fileInputRef}
+                                                className="hidden"
+                                                accept="image/*"
+                                                onChange={handleImageUpload}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {/* Basic Info */}
                                 <div className="space-y-4">
                                     <h3 className="text-lg font-bold text-white border-b border-gray-800 pb-2">Basic Info</h3>
