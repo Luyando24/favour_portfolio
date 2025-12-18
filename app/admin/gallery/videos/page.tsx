@@ -148,6 +148,19 @@ export default function AdminVideosPage() {
                         </div>
 
                         {/* Upload Area */}
+                        <div className="mb-6">
+                            <label className="block text-gray-400 text-sm mb-2">Upload Category</label>
+                            <select
+                                value={uploadCategory}
+                                onChange={(e) => setUploadCategory(e.target.value)}
+                                className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-benfica-red w-full sm:w-64"
+                            >
+                                {categories.filter(c => c.id !== 'all').map(cat => (
+                                    <option key={cat.id} value={cat.id}>{cat.label}</option>
+                                ))}
+                            </select>
+                        </div>
+
                         <div className="bg-gray-900 rounded-xl p-8 border border-gray-800 mb-8 text-center border-dashed border-2 border-gray-700 hover:border-benfica-red transition-colors cursor-pointer"
                              onClick={() => fileInputRef.current?.click()}>
                             <input
