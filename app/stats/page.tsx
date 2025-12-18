@@ -57,12 +57,12 @@ export default function StatsPage() {
                         </Reveal>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                            {TECHNICAL_STATS.map((stat, index) => (
+                            {technicalStats.map((stat, index) => (
                                 <Reveal key={index} delay={0.1 * index}>
                                     <StatCard
                                         label={stat.label}
                                         value={stat.value}
-                                        category={stat.category}
+                                        category={stat.category as any}
                                     />
                                 </Reveal>
                             ))}
@@ -81,12 +81,12 @@ export default function StatsPage() {
                         </Reveal>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                            {PHYSICAL_STATS.map((stat, index) => (
+                            {physicalStats.map((stat, index) => (
                                 <Reveal key={index} delay={0.1 * index}>
                                     <StatCard
                                         label={stat.label}
                                         value={stat.value}
-                                        category={stat.category}
+                                        category={stat.category as any}
                                     />
                                 </Reveal>
                             ))}

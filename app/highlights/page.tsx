@@ -28,14 +28,14 @@ export default function HighlightsPage() {
 
                     {/* Timeline */}
                     <div className="max-w-5xl mx-auto space-y-12">
-                        {CAREER_HIGHLIGHTS.map((highlight, index) => (
+                        {highlights.map((highlight, index) => (
                             <div
                                 key={highlight.id}
                                 className="relative animate-slide-up"
                                 style={{ animationDelay: `${index * 0.1}s` }}
                             >
                                 {/* Timeline Line */}
-                                {index !== CAREER_HIGHLIGHTS.length - 1 && (
+                                {index !== highlights.length - 1 && (
                                     <div className="absolute left-8 top-20 bottom-0 w-1 bg-gradient-to-b from-benfica-red to-transparent hidden md:block"></div>
                                 )}
 

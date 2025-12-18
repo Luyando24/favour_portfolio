@@ -4,7 +4,7 @@
 
 ### 1. Verify Your Deployment URL
 Your Vercel deployment URL should look like:
-- `https://david-araj.vercel.app` or
+- `https://favour-anekwe.vercel.app` or
 - `https://yourproject-name-hash.vercel.app`
 
 **NOT** just `https://vercel.app`

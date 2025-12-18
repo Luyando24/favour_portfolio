@@ -74,19 +74,19 @@ export default function ProfilePage() {
                                 <div className="space-y-6">
                                     <div className="group border-b border-white/5 pb-4 hover:border-benfica-gold/30 transition-colors">
                                         <div className="text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-benfica-gold transition-colors">Full Name</div>
-                                        <div className="text-white text-2xl font-bold tracking-wide">{PLAYER_INFO.fullName}</div>
+                                        <div className="text-white text-2xl font-bold tracking-wide">{profile.fullName}</div>
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-6">
                                         <div className="group border-b border-white/5 pb-4 hover:border-benfica-gold/30 transition-colors">
                                             <div className="text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-benfica-gold transition-colors">Age</div>
-                                            <div className="text-white text-xl font-semibold">{PLAYER_INFO.age} Years</div>
+                                            <div className="text-white text-xl font-semibold">{profile.age} Years</div>
                                         </div>
                                         <div className="group border-b border-white/5 pb-4 hover:border-benfica-gold/30 transition-colors">
                                             <div className="text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-benfica-gold transition-colors flex items-center gap-2">
                                                 <Flag className="w-3 h-3" /> Nationality
                                             </div>
-                                            <div className="text-white text-xl font-semibold">{PLAYER_INFO.nationality.join(' / ')}</div>
+                                            <div className="text-white text-xl font-semibold">{profile.nationality.join(' / ')}</div>
                                         </div>
                                     </div>
 
@@ -94,7 +94,7 @@ export default function ProfilePage() {
                                         <div className="text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-benfica-gold transition-colors flex items-center gap-2">
                                             <MapPin className="w-3 h-3" /> Current Location
                                         </div>
-                                        <div className="text-white text-xl font-semibold">{PLAYER_INFO.location}</div>
+                                        <div className="text-white text-xl font-semibold">{profile.location}</div>
                                     </div>
 
                                     <div className="pt-2">

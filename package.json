@@ -1,5 +1,5 @@
 {
-  "name": "david-portfolio",
+  "name": "favour-anekwe-portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -25,6 +25,7 @@
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.0.10",
     "postcss": "^8",
+    "supabase": "^2.67.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

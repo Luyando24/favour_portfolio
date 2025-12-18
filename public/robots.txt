@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://david-araj.vercel.app/sitemap.xml
+Sitemap: https://favour-anekwe.vercel.app/sitemap.xml

@@ -276,17 +276,19 @@ export async function GET() {
 
             doc.setFontSize(8);
             doc.setTextColor(150, 150, 150);
-            doc.text(`David Fahed Araj - Professional Portfolio`, 20, 285);
+            doc.text(`${PLAYER_INFO.fullName} - Professional Portfolio`, 20, 285);
             doc.text(`Page ${i} of ${pageCount}`, 190, 285, { align: 'right' });
         }
 
         const pdfBuffer = doc.output('arraybuffer');
 
+        const filename = `${PLAYER_INFO.fullName.replace(/\s+/g, '_')}_Profile.pdf`;
+
         return new NextResponse(pdfBuffer, {
             status: 200,
             headers: {
                 'Content-Type': 'application/pdf',
-                'Content-Disposition': 'attachment; filename="David_Araj_Profile.pdf"',
+                'Content-Disposition': `attachment; filename="${filename}"`,
             },
         });
 

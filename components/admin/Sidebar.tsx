@@ -33,6 +33,7 @@ export default function AdminSidebar() {
         { href: '/admin/honours', label: 'Honours', icon: Trophy },
         { href: '/admin/testimonials', label: 'Testimonials', icon: MessageSquare },
         { href: '/admin/profile', label: 'Profile', icon: User },
+        { href: '/admin/admins', label: 'Admin Users', icon: User },
     ];
 
     const handleLogout = () => {

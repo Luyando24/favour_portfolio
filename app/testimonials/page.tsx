@@ -64,9 +64,9 @@ export default function TestimonialsPage() {
                                 <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden pt-12">
                                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-benfica-gold to-transparent opacity-50"></div>
                                     <TestimonialBlock
-                                        text={TESTIMONIAL.text}
-                                        coach={TESTIMONIAL.coach}
-                                        title={TESTIMONIAL.title}
+                                        text={testimonial.text}
+                                        coach={testimonial.coach}
+                                        title={testimonial.title}
                                     />
                                 </div>
                             </div>

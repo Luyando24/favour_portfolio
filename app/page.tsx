@@ -8,82 +8,63 @@ import { Reveal } from '@/components/ui/Reveal';
 import TiltCard from '@/components/ui/TiltCard';
 import MagneticButton from '@/components/ui/MagneticButton';
 import { motion } from 'framer-motion';
-import { PLAYER_INFO, CAREER_HIGHLIGHTS as DEFAULT_HIGHLIGHTS, TECHNICAL_STATS, EDUCATION as DEFAULT_EDUCATION, HONOURS as DEFAULT_HONOURS } from '@/lib/constants';
-import { getPlayerStats, getCareerHighlights, getEducation, getHonours, getPhotos, getVideos, getPlayerInfo, PlayerStat, CareerHighlight, Education, Honour, GalleryPhoto, GalleryVideo, PlayerInfo } from '@/lib/supabase';
+import { 
+    fetchPlayerProfile, 
+    fetchTechnicalStats, 
+    fetchHighlights, 
+    fetchEducation, 
+    fetchHonours, 
+    UIPlayerInfo, 
+    UIStat, 
+    UICareerHighlight, 
+    UIEducation 
+} from '@/lib/data';
+import { getPhotos, getVideos, GalleryPhoto, GalleryVideo } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
 import { Trophy, Target, Zap, GraduationCap, Award, Calendar, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { 
+    PLAYER_INFO as DEFAULT_PLAYER_INFO, 
+    CAREER_HIGHLIGHTS as DEFAULT_HIGHLIGHTS, 
+    TECHNICAL_STATS as DEFAULT_STATS, 
+    EDUCATION as DEFAULT_EDUCATION, 
+    HONOURS as DEFAULT_HONOURS 
+} from '@/lib/constants';
 
 export default function Home() {
-    const [technicalStats, setTechnicalStats] = useState(TECHNICAL_STATS);
-    const [careerHighlights, setCareerHighlights] = useState(DEFAULT_HIGHLIGHTS);
-    const [education, setEducation] = useState(DEFAULT_EDUCATION);
+    const [technicalStats, setTechnicalStats] = useState<UIStat[]>(DEFAULT_STATS);
+    const [careerHighlights, setCareerHighlights] = useState<UICareerHighlight[]>(DEFAULT_HIGHLIGHTS);
+    const [education, setEducation] = useState<UIEducation[]>(DEFAULT_EDUCATION);
     const [honours, setHonours] = useState<string[]>(DEFAULT_HONOURS);
     const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
     const [videos, setVideos] = useState<GalleryVideo[]>([]);
-    const [playerInfo, setPlayerInfo] = useState<PlayerInfo | null>(null);
+    const [playerInfo, setPlayerInfo] = useState<UIPlayerInfo>(DEFAULT_PLAYER_INFO);
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                // Fetch Player Info
-                const infoData = await getPlayerInfo();
-                if (infoData) setPlayerInfo(infoData);
+            // Use the data layer with fallbacks
+            const info = await fetchPlayerProfile();
+            setPlayerInfo(info);
 
-                // Fetch Stats
-                const statsData = await getPlayerStats();
-                if (statsData && statsData.length > 0) {
-                    setTechnicalStats(statsData.map(s => ({
-                        label: s.label,
-                        value: s.value,
-                        category: s.category
-                    })));
-                }
+            const stats = await fetchTechnicalStats();
+            setTechnicalStats(stats);
 
-                // Fetch Career Highlights
-                const highlightsData = await getCareerHighlights();
-                if (highlightsData && highlightsData.length > 0) {
-                     const mappedHighlights = highlightsData.map((h: any) => ({
-                        id: h.id,
-                        title: h.title,
-                        description: h.description,
-                        details: [], // For now, or we fetch details if we added them
-                        icon: h.icon || '⚽',
-                        year: h.year
-                    }));
-                    setCareerHighlights(mappedHighlights as any);
-                }
+            const highlights = await fetchHighlights();
+            setCareerHighlights(highlights);
 
-                // Fetch Education
-                const educationData = await getEducation();
-                if (educationData && educationData.length > 0) {
-                    setEducation(educationData.map(e => ({
-                        degree: e.degree,
-                        institution: e.institution,
-                        year: e.year,
-                        details: e.details || '',
-                        website: e.website || ''
-                    })));
-                }
+            const edu = await fetchEducation();
+            setEducation(edu);
 
-                // Fetch Honours
-                const honoursData = await getHonours();
-                if (honoursData && honoursData.length > 0) {
-                    setHonours(honoursData.map(h => h.title));
-                }
+            const hon = await fetchHonours();
+            setHonours(hon);
 
-                // Fetch Photos (for media section)
-                const photosData = await getPhotos();
-                if (photosData) setPhotos(photosData);
+            // Media still fetches directly from Supabase helper as it returns empty array if failed, which is fine
+            const photosData = await getPhotos();
+            if (photosData) setPhotos(photosData);
 
-                // Fetch Videos (for media section)
-                const videosData = await getVideos();
-                if (videosData) setVideos(videosData);
-
-            } catch (error) {
-                console.error('Failed to load dynamic data, using defaults.', error);
-            }
+            const videosData = await getVideos();
+            if (videosData) setVideos(videosData);
         };
         fetchData();
     }, []);
