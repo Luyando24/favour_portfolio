@@ -4,7 +4,7 @@ The site needs a favicon. You can:
 
 ## Option 1: Quick Fix (Create Simple Favicon)
 1. Go to https://favicon.io/favicon-generator/
-2. Create a simple favicon with "DA" text (David Araj initials)
+2. Create a simple favicon with "FA" text (Favour Anekwe initials)
 3. Download the favicon package
 4. Place `favicon.ico` in the `public` folder
 

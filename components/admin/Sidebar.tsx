@@ -44,7 +44,7 @@ export default function AdminSidebar() {
         <aside className="w-64 bg-gray-900 min-h-screen p-6 flex flex-col">
             <div className="mb-8">
                 <h1 className="text-2xl font-display font-bold text-benfica-gold">Admin Panel</h1>
-                <p className="text-gray-400 text-sm mt-1">David Araj Portfolio</p>
+                <p className="text-gray-400 text-sm mt-1">Favour Anekwe Portfolio</p>
             </div>
 
             <nav className="flex-1">

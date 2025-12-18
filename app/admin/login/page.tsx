@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
                             <Lock className="w-8 h-8 text-white" />
                         </div>
                         <h1 className="text-3xl font-display font-bold text-white mb-2">Admin Login</h1>
-                        <p className="text-gray-400">David Araj Portfolio</p>
+                        <p className="text-gray-400">Favour Anekwe Portfolio</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">

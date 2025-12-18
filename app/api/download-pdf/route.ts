@@ -29,13 +29,13 @@ export async function GET() {
         doc.setTextColor(255, 255, 255);
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(24);
-        doc.text('DAVID FAHD ARAJ', 20, 18);
+        doc.text(PLAYER_INFO.fullName.toUpperCase(), 20, 18);
 
         // Title
         doc.setTextColor(212, 175, 55); // Gold
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text('ATTACKING MIDFIELDER (NO.10)', 20, 26);
+        doc.text(PLAYER_INFO.position.toUpperCase(), 20, 26);
 
         // Contact Info (Right aligned in header)
         doc.setTextColor(200, 200, 200);
@@ -43,7 +43,7 @@ export async function GET() {
         doc.setFont('helvetica', 'normal');
         doc.text(PLAYER_INFO.email, 190, 15, { align: 'right' });
         doc.text(PLAYER_INFO.location, 190, 20, { align: 'right' });
-        doc.text('davidaraj.com', 190, 25, { align: 'right' });
+        // doc.text('davidaraj.com', 190, 25, { align: 'right' }); // Website not available
 
         yPos = 50;
 
@@ -80,8 +80,8 @@ export async function GET() {
             ['Age', `${PLAYER_INFO.age} Years`],
             ['Height', PLAYER_INFO.height],
             ['Weight', PLAYER_INFO.weight],
-            ['Nationality', 'American'],
-            ['Footedness', 'Both Feet'],
+            ['Nationality', PLAYER_INFO.nationality.join(', ')],
+            ['Footedness', PLAYER_INFO.footedness],
             ['Location', PLAYER_INFO.location]
         ];
 
