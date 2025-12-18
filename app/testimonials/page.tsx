@@ -4,13 +4,25 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import TestimonialBlock from '@/components/ui/TestimonialBlock';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { TESTIMONIAL, PLAYER_INFO } from '@/lib/constants';
+import { TESTIMONIAL as DEFAULT_TESTIMONIAL } from '@/lib/constants';
+import { fetchTestimonial, UITestimonial } from '@/lib/data';
 import { Quote, Award, Star, CheckCircle2 } from 'lucide-react';
 import { Reveal } from '@/components/ui/Reveal';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function TestimonialsPage() {
+    const [testimonial, setTestimonial] = useState<UITestimonial>(DEFAULT_TESTIMONIAL);
+
+    useEffect(() => {
+        const loadData = async () => {
+            const data = await fetchTestimonial();
+            setTestimonial(data);
+        };
+        loadData();
+    }, []);
+
     return (
         <>
             <Header />

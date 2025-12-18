@@ -81,9 +81,9 @@ export default function Home() {
 
                 {/* Hero Section */}
                 <Hero
-                    title={PLAYER_INFO.fullName}
-                    subtitle={PLAYER_INFO.position}
-                    tagline={PLAYER_INFO.tagline}
+                    title={playerInfo.fullName}
+                    subtitle={playerInfo.position}
+                    tagline={playerInfo.tagline}
                     backgroundImage="/images/cover.jpeg"
                 />
 
@@ -430,7 +430,7 @@ export default function Home() {
                                             READY TO MAKE AN <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-benfica-red to-red-500">IMPACT?</span>
                                         </h3>
                                         <p className="text-gray-400 mb-8 max-w-md text-lg font-light leading-relaxed">
-                                            {PLAYER_INFO.fullName} is available for trials and transfer opportunities. 
+                                            {playerInfo.fullName} is available for trials and transfer opportunities. 
                                             Explore the full profile to see detailed statistics and video analysis.
                                         </p>
                                         <MagneticButton strength={5}>
@@ -446,7 +446,7 @@ export default function Home() {
 
                                     <div className="flex gap-4 md:gap-10 relative z-10 justify-center md:justify-start">
                                          <div className="text-center group/stat">
-                                            <div className="text-5xl font-black text-white mb-2 group-hover/stat:text-benfica-gold transition-colors">{playerInfo?.age || PLAYER_INFO.age}</div>
+                                            <div className="text-5xl font-black text-white mb-2 group-hover/stat:text-benfica-gold transition-colors">{playerInfo.age}</div>
                                             <div className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Age</div>
                                         </div>
                                         <div className="w-px h-20 bg-white/10"></div>

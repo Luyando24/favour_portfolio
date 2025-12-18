@@ -1,10 +1,12 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { CAREER_HIGHLIGHTS } from '@/lib/constants';
+import { fetchHighlights } from '@/lib/data';
 import { Calendar, Award, Star } from 'lucide-react';
 
-export default function HighlightsPage() {
+export default async function HighlightsPage() {
+    const highlights = await fetchHighlights();
+
     return (
         <>
             <Header />

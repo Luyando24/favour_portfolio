@@ -4,12 +4,27 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import StatCard from '@/components/ui/StatCard';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { TECHNICAL_STATS, PHYSICAL_STATS } from '@/lib/constants';
+import { TECHNICAL_STATS as DEFAULT_TECHNICAL_STATS, PHYSICAL_STATS as DEFAULT_PHYSICAL_STATS } from '@/lib/constants';
+import { fetchTechnicalStats, fetchPhysicalStats, UIStat } from '@/lib/data';
 import { Activity, Zap, TrendingUp } from 'lucide-react';
 import { Reveal } from '@/components/ui/Reveal';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export default function StatsPage() {
+    const [technicalStats, setTechnicalStats] = useState<UIStat[]>(DEFAULT_TECHNICAL_STATS);
+    const [physicalStats, setPhysicalStats] = useState<UIStat[]>(DEFAULT_PHYSICAL_STATS);
+
+    useEffect(() => {
+        const loadData = async () => {
+            const tech = await fetchTechnicalStats();
+            setTechnicalStats(tech);
+            const phys = await fetchPhysicalStats();
+            setPhysicalStats(phys);
+        };
+        loadData();
+    }, []);
+
     return (
         <>
             <Header />

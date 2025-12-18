@@ -3,21 +3,33 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Breadcrumb from '@/components/ui/Breadcrumb';
-import { PLAYER_INFO, CHARACTER_DATA } from '@/lib/constants';
+import { PLAYER_INFO as DEFAULT_PLAYER_INFO, CHARACTER_DATA } from '@/lib/constants';
+import { fetchPlayerProfile, UIPlayerInfo } from '@/lib/data';
 import { User, MapPin, Flag, Ruler, Weight, Footprints, GraduationCap, CheckCircle2, Trophy, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Reveal } from '@/components/ui/Reveal';
+import { useEffect, useState } from 'react';
 
 export default function ProfilePage() {
-    const displayHeight = PLAYER_INFO.height;
-    const displayWeight = PLAYER_INFO.weight;
-    const displayFoot = PLAYER_INFO.footedness;
-    const displayTagline = PLAYER_INFO.tagline;
-    const displayName = PLAYER_INFO.fullName;
-    const displayAge = PLAYER_INFO.age;
-    const displayPosition = PLAYER_INFO.position;
-    const displayNationality = PLAYER_INFO.nationality;
-    const displayLocation = PLAYER_INFO.location;
+    const [playerInfo, setPlayerInfo] = useState<UIPlayerInfo>(DEFAULT_PLAYER_INFO);
+
+    useEffect(() => {
+        const loadData = async () => {
+            const data = await fetchPlayerProfile();
+            setPlayerInfo(data);
+        };
+        loadData();
+    }, []);
+
+    const displayHeight = playerInfo.height;
+    const displayWeight = playerInfo.weight;
+    const displayFoot = playerInfo.footedness;
+    const displayTagline = playerInfo.tagline;
+    const displayName = playerInfo.fullName;
+    const displayAge = playerInfo.age;
+    const displayPosition = playerInfo.position;
+    const displayNationality = playerInfo.nationality;
+    const displayLocation = playerInfo.location;
 
     return (
         <>
@@ -74,19 +86,19 @@ export default function ProfilePage() {
                                 <div className="space-y-6">
                                     <div className="group border-b border-white/5 pb-4 hover:border-benfica-gold/30 transition-colors">
                                         <div className="text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-benfica-gold transition-colors">Full Name</div>
-                                        <div className="text-white text-2xl font-bold tracking-wide">{profile.fullName}</div>
+                                        <div className="text-white text-2xl font-bold tracking-wide">{displayName}</div>
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-6">
                                         <div className="group border-b border-white/5 pb-4 hover:border-benfica-gold/30 transition-colors">
                                             <div className="text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-benfica-gold transition-colors">Age</div>
-                                            <div className="text-white text-xl font-semibold">{profile.age} Years</div>
+                                            <div className="text-white text-xl font-semibold">{displayAge} Years</div>
                                         </div>
                                         <div className="group border-b border-white/5 pb-4 hover:border-benfica-gold/30 transition-colors">
                                             <div className="text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-benfica-gold transition-colors flex items-center gap-2">
                                                 <Flag className="w-3 h-3" /> Nationality
                                             </div>
-                                            <div className="text-white text-xl font-semibold">{profile.nationality.join(' / ')}</div>
+                                            <div className="text-white text-xl font-semibold">{displayNationality.join(' / ')}</div>
                                         </div>
                                     </div>
 
@@ -94,13 +106,13 @@ export default function ProfilePage() {
                                         <div className="text-gray-500 text-xs uppercase tracking-widest mb-2 group-hover:text-benfica-gold transition-colors flex items-center gap-2">
                                             <MapPin className="w-3 h-3" /> Current Location
                                         </div>
-                                        <div className="text-white text-xl font-semibold">{profile.location}</div>
+                                        <div className="text-white text-xl font-semibold">{displayLocation}</div>
                                     </div>
 
                                     <div className="pt-2">
                                         <div className="text-gray-500 text-xs uppercase tracking-widest mb-2">Primary Position</div>
                                         <div className="inline-block bg-benfica-gold text-black px-4 py-2 rounded-lg font-display font-bold text-xl shadow-lg shadow-benfica-gold/20">
-                                            {PLAYER_INFO.position}
+                                            {displayPosition}
                                         </div>
                                     </div>
                                 </div>
