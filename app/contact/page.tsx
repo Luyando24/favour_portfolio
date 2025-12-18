@@ -4,8 +4,19 @@ import ContactForm from '@/components/ui/ContactForm';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import { PLAYER_INFO } from '@/lib/constants';
 import { Mail, Phone, MapPin, MessageCircle, Instagram, Youtube } from 'lucide-react';
+import { getPlayerInfo } from '@/lib/supabase';
 
-export default function ContactPage() {
+export default async function ContactPage() {
+    const dbPlayerInfo = await getPlayerInfo();
+
+    const displayInfo = {
+        email: dbPlayerInfo?.email || PLAYER_INFO.email,
+        phone: dbPlayerInfo?.phone || PLAYER_INFO.phone,
+        location: dbPlayerInfo?.location || PLAYER_INFO.location,
+        whatsapp: dbPlayerInfo?.whatsapp || PLAYER_INFO.whatsapp,
+        instagram: dbPlayerInfo?.instagram || PLAYER_INFO.instagram,
+    };
+
     return (
         <>
             <Header />
@@ -55,7 +66,7 @@ export default function ContactPage() {
                                         <div>
                                             <div className="text-white font-semibold mb-1">Email</div>
                                             <div className="flex flex-col gap-1">
-                                                {PLAYER_INFO.email.split('/').map((email, index) => (
+                                                {displayInfo.email.split('/').map((email, index) => (
                                                     <a 
                                                         key={index}
                                                         href={`mailto:${email.trim()}`}
@@ -70,7 +81,7 @@ export default function ContactPage() {
 
                                     {/* Phone */}
                                     <a
-                                        href={`tel:${PLAYER_INFO.phone}`}
+                                        href={`tel:${displayInfo.phone}`}
                                         className="flex items-start space-x-4 text-gray-300 hover:text-benfica-red transition-colors group"
                                     >
                                         <div className="flex-shrink-0 w-12 h-12 bg-benfica-red/10 rounded-lg flex items-center justify-center group-hover:bg-benfica-red/20 transition-colors">
@@ -78,7 +89,7 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <div className="text-white font-semibold mb-1">Phone</div>
-                                            <div className="text-sm">{PLAYER_INFO.phone}</div>
+                                            <div className="text-sm">{displayInfo.phone}</div>
                                         </div>
                                     </a>
 
@@ -89,7 +100,7 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <div className="text-white font-semibold mb-1">Location</div>
-                                            <div className="text-sm">{PLAYER_INFO.location}</div>
+                                            <div className="text-sm">{displayInfo.location}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +118,7 @@ export default function ContactPage() {
                                     For urgent inquiries or quick questions, reach out via WhatsApp.
                                 </p>
                                 <a
-                                    href={`https://wa.me/${PLAYER_INFO.whatsapp}`}
+                                    href={`https://wa.me/${displayInfo.whatsapp}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center space-x-2 bg-white text-green-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all"
@@ -125,7 +136,7 @@ export default function ContactPage() {
 
                                 <div className="flex space-x-4">
                                     <a
-                                        href={PLAYER_INFO.instagram}
+                                        href={displayInfo.instagram}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex-1 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg p-6 text-white hover:scale-105 transition-transform"
