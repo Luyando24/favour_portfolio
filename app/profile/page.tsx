@@ -9,6 +9,16 @@ import { motion } from 'framer-motion';
 import { Reveal } from '@/components/ui/Reveal';
 
 export default function ProfilePage() {
+    const displayHeight = PLAYER_INFO.height;
+    const displayWeight = PLAYER_INFO.weight;
+    const displayFoot = PLAYER_INFO.footedness;
+    const displayTagline = PLAYER_INFO.tagline;
+    const displayName = PLAYER_INFO.fullName;
+    const displayAge = PLAYER_INFO.age;
+    const displayPosition = PLAYER_INFO.position;
+    const displayNationality = PLAYER_INFO.nationality;
+    const displayLocation = PLAYER_INFO.location;
+
     return (
         <>
             <Header />

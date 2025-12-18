@@ -13,6 +13,7 @@ interface ContactSubmission {
     phone?: string;
     message: string;
     created_at: string;
+    read: boolean;
 }
 
 export default function AdminContactsPage() {

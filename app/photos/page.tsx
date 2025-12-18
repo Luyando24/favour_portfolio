@@ -183,7 +183,7 @@ export default function PhotoGalleryPage() {
                             >
                                 <Image
                                     src={filteredPhotos[lightboxIndex].url}
-                                    alt={filteredPhotos[lightboxIndex].caption || 'Photo'}
+                                    alt={filteredPhotos[lightboxIndex].title || 'Photo'}
                                     fill
                                     className="object-contain"
                                     sizes="100vw"
@@ -193,7 +193,7 @@ export default function PhotoGalleryPage() {
                             
                             <div className="absolute bottom-8 left-0 right-0 text-center">
                                 <h3 className="text-white text-xl font-display font-bold mb-2">
-                                    {filteredPhotos[lightboxIndex].caption}
+                                    {filteredPhotos[lightboxIndex].title}
                                 </h3>
                                 <p className="text-benfica-gold text-xs font-bold uppercase tracking-widest">
                                     {lightboxIndex + 1} / {filteredPhotos.length}

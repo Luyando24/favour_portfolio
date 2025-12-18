@@ -21,6 +21,7 @@ export interface GalleryVideo {
     url: string;
     thumbnail_url?: string;
     title?: string;
+    description?: string;
     category?: string;
     display_order: number;
     created_at: string;
@@ -91,6 +92,14 @@ export interface Honour {
     created_at: string;
 }
 
+export interface PlayerSkill {
+    id: string;
+    category: string;
+    skill: string;
+    display_order: number;
+    created_at: string;
+}
+
 export interface PlayerInfo {
     id: string;
     full_name: string;
@@ -98,6 +107,7 @@ export interface PlayerInfo {
     height: string;
     weight: string;
     nationality: string[];
+    languages?: string[];
     position: string;
     footedness: string;
     location: string;

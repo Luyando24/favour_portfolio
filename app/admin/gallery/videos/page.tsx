@@ -110,11 +110,11 @@ export default function AdminVideosPage() {
         }
     };
 
-    const handleUpdateVideo = async (id: string, title: string) => {
+    const handleUpdateVideo = async (id: string, title: string, category: string) => {
         try {
             const { error } = await supabase
                 .from('gallery_videos')
-                .update({ title })
+                .update({ title, category })
                 .eq('id', id);
 
             if (error) throw error;
