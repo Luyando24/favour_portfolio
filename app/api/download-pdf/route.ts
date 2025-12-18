@@ -67,7 +67,7 @@ export async function GET() {
                 }));
             }
 
-            const dbPhysical = dbStats.filter(s => s.category === 'physical' || s.category === 'measurement');
+            const dbPhysical = dbStats.filter(s => s.category === 'physical');
             if (dbPhysical.length > 0) {
                 physicalStats = dbPhysical.map(s => ({
                     label: s.label,
