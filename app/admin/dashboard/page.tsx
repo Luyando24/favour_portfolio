@@ -101,14 +101,7 @@ export default function AdminDashboardPage() {
                             </div>
                         </div>
 
-                        {/* Info Box */}
-                        <div className="mt-8 bg-benfica-red/10 border border-benfica-red/20 rounded-xl p-6">
-                            <h3 className="text-lg font-semibold text-benfica-red mb-2">Admin Panel Info</h3>
-                            <p className="text-gray-300 text-sm">
-                                This is a demo admin panel. In production, integrate with Supabase for full database management,
-                                authentication with Supabase Auth, and RLS policies for security.
-                            </p>
-                        </div>
+
                     </div>
                 </main>
             </div>

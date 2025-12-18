@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import AdminSidebar from '@/components/admin/Sidebar';
-import { UserPlus, Trash2, User, Loader2, AlertCircle } from 'lucide-react';
+import { UserPlus, Trash2, User, Loader2, AlertCircle, Key, Check, X } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getAdminCredentials } from '@/lib/admin-auth';
 
@@ -21,6 +21,8 @@ export default function AdminManagementPage() {
     const [newPassword, setNewPassword] = useState('');
     const [creating, setCreating] = useState(false);
     const [createSuccess, setCreateSuccess] = useState('');
+    const [resettingId, setResettingId] = useState<string | null>(null);
+    const [resetPassword, setResetPassword] = useState('');
 
     const fetchAdmins = async () => {
         setLoading(true);
@@ -101,6 +103,36 @@ export default function AdminManagementPage() {
         } catch (err: any) {
             console.error('Error deleting admin:', err);
             alert(err.message || 'Failed to delete admin user');
+        }
+    };
+
+    const handleResetPassword = async (id: string) => {
+        if (!resetPassword || resetPassword.length < 6) {
+            alert('Password must be at least 6 characters');
+            return;
+        }
+
+        try {
+            const creds = getAdminCredentials();
+            if (!creds.email || !creds.password) {
+                throw new Error('No admin credentials found');
+            }
+
+            const { error: rpcError } = await supabase.rpc('admin_reset_password', {
+                p_operator_email: creds.email,
+                p_operator_password: creds.password,
+                p_target_id: id,
+                p_new_password: resetPassword
+            });
+
+            if (rpcError) throw rpcError;
+
+            alert('Password updated successfully');
+            setResettingId(null);
+            setResetPassword('');
+        } catch (err: any) {
+            console.error('Error resetting password:', err);
+            alert(err.message || 'Failed to reset password');
         }
     };
 
