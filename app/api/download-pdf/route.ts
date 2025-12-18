@@ -1,9 +1,104 @@
 import { NextResponse } from 'next/server';
-import { PLAYER_INFO, TECHNICAL_STATS, PHYSICAL_STATS, CAREER_HIGHLIGHTS, TESTIMONIAL, CHARACTER_DATA, PLAYER_SUMMARY } from '@/lib/constants';
+import { 
+    PLAYER_INFO as CONST_PLAYER_INFO, 
+    TECHNICAL_STATS as CONST_TECHNICAL_STATS, 
+    PHYSICAL_STATS as CONST_PHYSICAL_STATS, 
+    CAREER_HIGHLIGHTS as CONST_CAREER_HIGHLIGHTS, 
+    TESTIMONIAL as CONST_TESTIMONIAL, 
+    CHARACTER_DATA, 
+    PLAYER_SUMMARY 
+} from '@/lib/constants';
+import { 
+    getPlayerInfo, 
+    getPlayerStats, 
+    getCareerHighlights, 
+    getTestimonials 
+} from '@/lib/supabase';
 import { jsPDF } from 'jspdf';
+
+export const dynamic = 'force-dynamic'; // Ensure this route is always dynamic
 
 export async function GET() {
     try {
+        // Fetch dynamic data from Supabase
+        const [
+            dbPlayerInfo,
+            dbStats,
+            dbHighlights,
+            dbTestimonials
+        ] = await Promise.all([
+            getPlayerInfo(),
+            getPlayerStats(),
+            getCareerHighlights(),
+            getTestimonials()
+        ]);
+
+        // --- PREPARE DATA ---
+
+        // Player Info
+        const playerInfo = dbPlayerInfo ? {
+            fullName: dbPlayerInfo.full_name,
+            position: dbPlayerInfo.position,
+            email: dbPlayerInfo.email,
+            location: dbPlayerInfo.location,
+            age: dbPlayerInfo.age,
+            height: dbPlayerInfo.height,
+            weight: dbPlayerInfo.weight,
+            nationality: dbPlayerInfo.nationality || [],
+            footedness: dbPlayerInfo.footedness,
+            tagline: dbPlayerInfo.tagline
+        } : CONST_PLAYER_INFO;
+
+        // Stats
+        let technicalStats = CONST_TECHNICAL_STATS;
+        let physicalStats = CONST_PHYSICAL_STATS;
+
+        if (dbStats && dbStats.length > 0) {
+            // Filter DB stats. 
+            // Assuming 'performance' category maps to Technical/Key Metrics
+            // Assuming 'measurement' or 'physical' category maps to Physical
+            
+            const dbTechnical = dbStats.filter(s => s.category === 'performance' || s.category === 'technical');
+            if (dbTechnical.length > 0) {
+                technicalStats = dbTechnical.map(s => ({
+                    label: s.label,
+                    value: s.value,
+                    category: s.category
+                }));
+            }
+
+            const dbPhysical = dbStats.filter(s => s.category === 'physical' || s.category === 'measurement');
+            if (dbPhysical.length > 0) {
+                physicalStats = dbPhysical.map(s => ({
+                    label: s.label,
+                    value: s.value,
+                    category: s.category
+                }));
+            }
+        }
+
+        // Highlights
+        const highlights = (dbHighlights && dbHighlights.length > 0) ? dbHighlights.map(h => ({
+            title: h.title,
+            year: h.year,
+            description: h.description,
+            details: h.details ? h.details.map(d => d.detail) : []
+        })) : CONST_CAREER_HIGHLIGHTS;
+
+        // Testimonial
+        const testimonial = (dbTestimonials && dbTestimonials.length > 0) ? {
+            text: dbTestimonials[0].text,
+            coach: dbTestimonials[0].coach,
+            title: dbTestimonials[0].title || ''
+        } : CONST_TESTIMONIAL;
+
+        // Summary - Use tagline if available and long enough, otherwise constant
+        // Or strictly use constant as tagline is usually short. 
+        // Let's use constant for summary for now as DB doesn't have a 'bio' field.
+        const summary = PLAYER_SUMMARY;
+
+
+        // --- GENERATE PDF ---
         const doc = new jsPDF();
 
         // Colors
@@ -29,20 +124,20 @@ export async function GET() {
         doc.setTextColor(255, 255, 255);
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(24);
-        doc.text(PLAYER_INFO.fullName.toUpperCase(), 20, 18);
+        doc.text(playerInfo.fullName.toUpperCase(), 20, 18);
 
         // Title
         doc.setTextColor(212, 175, 55); // Gold
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.text(PLAYER_INFO.position.toUpperCase(), 20, 26);
+        doc.text(playerInfo.position.toUpperCase(), 20, 26);
 
         // Contact Info (Right aligned in header)
         doc.setTextColor(200, 200, 200);
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
-        doc.text(PLAYER_INFO.email, 190, 15, { align: 'right' });
-        doc.text(PLAYER_INFO.location, 190, 20, { align: 'right' });
+        doc.text(playerInfo.email, 190, 15, { align: 'right' });
+        doc.text(playerInfo.location, 190, 20, { align: 'right' });
         // doc.text('davidaraj.com', 190, 25, { align: 'right' }); // Website not available
 
         yPos = 50;
@@ -51,7 +146,7 @@ export async function GET() {
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(11);
         doc.setFont('helvetica', 'italic');
-        const summaryLines = doc.splitTextToSize(`"${PLAYER_SUMMARY}"`, 170);
+        const summaryLines = doc.splitTextToSize(`"${summary}"`, 170);
         doc.text(summaryLines, 20, yPos);
         yPos += (summaryLines.length * 6) + 10;
 
@@ -77,12 +172,12 @@ export async function GET() {
         doc.setFont('helvetica', 'normal');
 
         const profileData = [
-            ['Age', `${PLAYER_INFO.age} Years`],
-            ['Height', PLAYER_INFO.height],
-            ['Weight', PLAYER_INFO.weight],
-            ['Nationality', PLAYER_INFO.nationality.join(', ')],
-            ['Footedness', PLAYER_INFO.footedness],
-            ['Location', PLAYER_INFO.location]
+            ['Age', `${playerInfo.age} Years`],
+            ['Height', playerInfo.height],
+            ['Weight', playerInfo.weight],
+            ['Nationality', playerInfo.nationality.join(', ')],
+            ['Footedness', playerInfo.footedness],
+            ['Location', playerInfo.location]
         ];
 
         profileData.forEach(([label, value]) => {
@@ -136,7 +231,7 @@ export async function GET() {
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(10);
 
-        TECHNICAL_STATS.slice(0, 6).forEach(stat => {
+        technicalStats.slice(0, 6).forEach(stat => {
             doc.setFont('helvetica', 'bold');
             doc.text(stat.label, rightColX, rightY);
             doc.setFont('helvetica', 'normal');
@@ -170,8 +265,8 @@ export async function GET() {
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(10);
 
-        // Filter out Height/Weight as they are in profile
-        const physicalMetrics = PHYSICAL_STATS.filter(s => s.label !== 'Height' && s.label !== 'Weight');
+        // Filter out Height/Weight as they are in profile if they exist in stats
+        const physicalMetrics = physicalStats.filter(s => s.label !== 'Height' && s.label !== 'Weight');
 
         physicalMetrics.forEach(stat => {
             doc.setFont('helvetica', 'bold');
@@ -195,7 +290,7 @@ export async function GET() {
 
         doc.setTextColor(0, 0, 0);
 
-        CAREER_HIGHLIGHTS.forEach(h => {
+        highlights.forEach(h => {
             // Check for page break
             if (yPos > 260) {
                 doc.addPage();
@@ -252,17 +347,17 @@ export async function GET() {
         doc.setFont('helvetica', 'italic');
         doc.setTextColor(50, 50, 50);
 
-        const testimonialLines = doc.splitTextToSize(`"${TESTIMONIAL.text}"`, 160);
+        const testimonialLines = doc.splitTextToSize(`"${testimonial.text}"`, 160);
         doc.text(testimonialLines, 25, yPos + 10);
 
         yPos += (testimonialLines.length * 5) + 15;
 
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(0, 0, 0);
-        doc.text(`- ${TESTIMONIAL.coach}`, 180, yPos - 5, { align: 'right' });
+        doc.text(`- ${testimonial.coach}`, 180, yPos - 5, { align: 'right' });
         doc.setFontSize(9);
         doc.setTextColor(100, 100, 100);
-        doc.text(TESTIMONIAL.title, 180, yPos, { align: 'right' });
+        doc.text(testimonial.title || '', 180, yPos, { align: 'right' });
 
         // --- FOOTER ---
         const pageCount = doc.getNumberOfPages();
@@ -276,13 +371,13 @@ export async function GET() {
 
             doc.setFontSize(8);
             doc.setTextColor(150, 150, 150);
-            doc.text(`${PLAYER_INFO.fullName} - Professional Portfolio`, 20, 285);
+            doc.text(`${playerInfo.fullName} - Professional Portfolio`, 20, 285);
             doc.text(`Page ${i} of ${pageCount}`, 190, 285, { align: 'right' });
         }
 
         const pdfBuffer = doc.output('arraybuffer');
 
-        const filename = `${PLAYER_INFO.fullName.replace(/\s+/g, '_')}_Profile.pdf`;
+        const filename = `${playerInfo.fullName.replace(/\s+/g, '_')}_Profile.pdf`;
 
         return new NextResponse(pdfBuffer, {
             status: 200,
