@@ -155,13 +155,55 @@ export default function AdminManagementPage() {
                                                                 {new Date(admin.created_at).toLocaleDateString()}
                                                             </td>
                                                             <td className="py-4 pr-2 text-right">
-                                                                <button
-                                                                    onClick={() => handleDeleteAdmin(admin.id)}
-                                                                    className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
-                                                                    title="Delete Admin"
-                                                                >
-                                                                    <Trash2 className="w-4 h-4" />
-                                                                </button>
+                                                                {resettingId === admin.id ? (
+                                                                    <div className="flex items-center justify-end gap-2">
+                                                                        <input
+                                                                            type="password"
+                                                                            placeholder="New Password"
+                                                                            value={resetPassword}
+                                                                            onChange={(e) => setResetPassword(e.target.value)}
+                                                                            className="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-white text-sm w-32 focus:border-benfica-gold outline-none"
+                                                                            autoFocus
+                                                                        />
+                                                                        <button
+                                                                            onClick={() => handleResetPassword(admin.id)}
+                                                                            className="p-1 text-green-500 hover:bg-green-500/10 rounded transition-colors"
+                                                                            title="Save Password"
+                                                                        >
+                                                                            <Check className="w-4 h-4" />
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => {
+                                                                                setResettingId(null);
+                                                                                setResetPassword('');
+                                                                            }}
+                                                                            className="p-1 text-gray-500 hover:bg-gray-500/10 rounded transition-colors"
+                                                                            title="Cancel"
+                                                                        >
+                                                                            <X className="w-4 h-4" />
+                                                                        </button>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className="flex items-center justify-end gap-2">
+                                                                        <button
+                                                                            onClick={() => {
+                                                                                setResettingId(admin.id);
+                                                                                setResetPassword('');
+                                                                            }}
+                                                                            className="p-2 text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors"
+                                                                            title="Reset Password"
+                                                                        >
+                                                                            <Key className="w-4 h-4" />
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => handleDeleteAdmin(admin.id)}
+                                                                            className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                                                                            title="Delete Admin"
+                                                                        >
+                                                                            <Trash2 className="w-4 h-4" />
+                                                                        </button>
+                                                                    </div>
+                                                                )}
                                                             </td>
                                                         </tr>
                                                     ))}
