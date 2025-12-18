@@ -104,6 +104,8 @@ export interface PlayerInfo {
     id: string;
     full_name: string;
     age: string;
+    dob?: string;
+    place_of_birth?: string;
     height: string;
     weight: string;
     nationality: string[];
