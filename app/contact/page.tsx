@@ -48,18 +48,25 @@ export default function ContactPage() {
 
                                 <div className="space-y-6">
                                     {/* Email */}
-                                    <a
-                                        href={`mailto:${PLAYER_INFO.email}`}
-                                        className="flex items-start space-x-4 text-gray-300 hover:text-benfica-red transition-colors group"
-                                    >
-                                        <div className="flex-shrink-0 w-12 h-12 bg-benfica-red/10 rounded-lg flex items-center justify-center group-hover:bg-benfica-red/20 transition-colors">
+                                    <div className="flex items-start space-x-4 text-gray-300 group">
+                                        <div className="flex-shrink-0 w-12 h-12 bg-benfica-red/10 rounded-lg flex items-center justify-center transition-colors">
                                             <Mail className="w-6 h-6 text-benfica-red" />
                                         </div>
                                         <div>
                                             <div className="text-white font-semibold mb-1">Email</div>
-                                            <div className="text-sm">{PLAYER_INFO.email}</div>
+                                            <div className="flex flex-col gap-1">
+                                                {PLAYER_INFO.email.split('/').map((email, index) => (
+                                                    <a 
+                                                        key={index}
+                                                        href={`mailto:${email.trim()}`}
+                                                        className="text-sm hover:text-benfica-red transition-colors"
+                                                    >
+                                                        {email.trim()}
+                                                    </a>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </a>
+                                    </div>
 
                                     {/* Phone */}
                                     <a

@@ -328,7 +328,7 @@ export default function AdminProfilePage() {
                                 <h3 className="text-lg font-bold text-white">Contact & Social</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-gray-400 text-sm mb-1">Email</label>
+                                        <label className="block text-gray-400 text-sm mb-1">Email (separate multiple with /)</label>
                                         <input
                                             name="email"
                                             value={info?.email || ''}

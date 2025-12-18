@@ -55,15 +55,22 @@ export default function Footer() {
                             Get in Touch
                         </h4>
                         <div className="space-y-4">
-                            <a
-                                href={`mailto:${PLAYER_INFO.email}`}
-                                className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors group p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 hover:bg-white/10"
-                            >
+                            <div className="flex items-center space-x-3 text-gray-400 group p-4 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 hover:bg-white/10 transition-colors">
                                 <div className="p-2 bg-black rounded-lg text-benfica-red group-hover:scale-110 transition-transform">
                                     <Mail className="w-5 h-5" />
                                 </div>
-                                <span className="text-sm group-hover:text-benfica-gold transition-colors">{PLAYER_INFO.email}</span>
-                            </a>
+                                <div className="flex flex-col gap-1">
+                                    {PLAYER_INFO.email.split('/').map((email, index) => (
+                                        <a 
+                                            key={index}
+                                            href={`mailto:${email.trim()}`}
+                                            className="text-sm hover:text-benfica-gold transition-colors"
+                                        >
+                                            {email.trim()}
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
 
                             <div className="flex gap-3 pt-2">
                                 <SocialButton 
