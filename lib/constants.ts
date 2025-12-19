@@ -9,7 +9,7 @@ export const PLAYER_INFO = {
     footedness: 'Right Foot',
     location: 'Hangzhou, China',
     tagline: 'Motivated, physically fit, and creative footballer committed to excellence.',
-    email: 'gentlegentlemoon@gmail.com',
+    email: 'gentlegentlemoon@gmail.com / sofwan@rihlasoccer.com',
     phone: '(+86) 18536223834',
     whatsapp: '(+86) 18536223834',
     instagram: 'https://www.instagram.com/Favour_gentle',
