@@ -78,21 +78,21 @@ export async function fetchPlayerProfile(): Promise<UIPlayerInfo> {
         const data = await getDbPlayerInfo();
         if (data) {
             return {
-                fullName: data.full_name,
-                age: data.age,
-                height: data.height,
-                weight: data.weight,
-                nationality: data.nationality || [],
-                position: data.position,
-                footedness: data.footedness,
-                location: data.location,
-                tagline: data.tagline,
-                email: data.email,
-                phone: data.phone,
-                whatsapp: data.whatsapp,
-                instagram: data.instagram,
-                youtube: data.youtube,
-                heroImage: data.hero_image_url
+                fullName: data.full_name || CONST_PLAYER_INFO.fullName,
+                age: data.age || CONST_PLAYER_INFO.age,
+                height: data.height || CONST_PLAYER_INFO.height,
+                weight: data.weight || CONST_PLAYER_INFO.weight,
+                nationality: (data.nationality && data.nationality.length > 0) ? data.nationality : CONST_PLAYER_INFO.nationality,
+                position: data.position || CONST_PLAYER_INFO.position,
+                footedness: data.footedness || CONST_PLAYER_INFO.footedness,
+                location: data.location || CONST_PLAYER_INFO.location,
+                tagline: data.tagline || CONST_PLAYER_INFO.tagline,
+                email: data.email || CONST_PLAYER_INFO.email,
+                phone: data.phone || CONST_PLAYER_INFO.phone,
+                whatsapp: data.whatsapp || CONST_PLAYER_INFO.whatsapp,
+                instagram: data.instagram || CONST_PLAYER_INFO.instagram,
+                youtube: data.youtube || CONST_PLAYER_INFO.youtube,
+                heroImage: data.hero_image_url || CONST_PLAYER_INFO.heroImage
             };
         }
     } catch (error) {

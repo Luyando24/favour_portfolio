@@ -6,6 +6,9 @@
 drop policy if exists "Authenticated Insert" on storage.objects;
 drop policy if exists "Authenticated Update" on storage.objects;
 drop policy if exists "Authenticated Delete" on storage.objects;
+drop policy if exists "Public Insert" on storage.objects;
+drop policy if exists "Public Update" on storage.objects;
+drop policy if exists "Public Delete" on storage.objects;
 
 -- Allow anyone (public/anon) to upload to 'videos' and 'photos'
 -- In a stricter production environment, we would require a valid Supabase JWT.

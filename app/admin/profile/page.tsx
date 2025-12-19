@@ -57,9 +57,9 @@ export default function AdminProfilePage() {
                 if (error) throw error;
                 fetchInfo();
             }
-        } catch (err: any) {
+        } catch (err) {
             console.error(err);
-            setError('Failed to save changes: ' + (err.message || JSON.stringify(err)));
+            setError('Failed to save changes');
         } finally {
             setSaving(false);
         }

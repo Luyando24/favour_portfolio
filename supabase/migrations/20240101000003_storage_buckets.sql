@@ -9,7 +9,7 @@ values ('photos', 'photos', true)
 on conflict (id) do nothing;
 
 -- Enable RLS on storage.objects if not already enabled (it usually is)
-alter table storage.objects enable row level security;
+-- alter table storage.objects enable row level security;
 
 -- Drop existing policies to avoid conflicts if re-running
 drop policy if exists "Public Access" on storage.objects;

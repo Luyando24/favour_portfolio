@@ -37,16 +37,16 @@ export async function GET() {
 
         // Player Info
         const playerInfo = dbPlayerInfo ? {
-            fullName: dbPlayerInfo.full_name,
-            position: dbPlayerInfo.position,
-            email: dbPlayerInfo.email,
-            location: dbPlayerInfo.location,
-            age: dbPlayerInfo.age,
-            height: dbPlayerInfo.height,
-            weight: dbPlayerInfo.weight,
-            nationality: dbPlayerInfo.nationality || [],
-            footedness: dbPlayerInfo.footedness,
-            tagline: dbPlayerInfo.tagline
+            fullName: dbPlayerInfo.full_name || CONST_PLAYER_INFO.fullName,
+            position: dbPlayerInfo.position || CONST_PLAYER_INFO.position,
+            email: dbPlayerInfo.email || CONST_PLAYER_INFO.email,
+            location: dbPlayerInfo.location || CONST_PLAYER_INFO.location,
+            age: dbPlayerInfo.age || CONST_PLAYER_INFO.age,
+            height: dbPlayerInfo.height || CONST_PLAYER_INFO.height,
+            weight: dbPlayerInfo.weight || CONST_PLAYER_INFO.weight,
+            nationality: (dbPlayerInfo.nationality && dbPlayerInfo.nationality.length > 0) ? dbPlayerInfo.nationality : CONST_PLAYER_INFO.nationality,
+            footedness: dbPlayerInfo.footedness || CONST_PLAYER_INFO.footedness,
+            tagline: dbPlayerInfo.tagline || CONST_PLAYER_INFO.tagline
         } : CONST_PLAYER_INFO;
 
         // Stats
