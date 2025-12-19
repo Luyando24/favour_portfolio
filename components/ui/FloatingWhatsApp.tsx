@@ -8,7 +8,7 @@ export default function FloatingWhatsApp() {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleClick = () => {
-        window.open(`https://wa.me/${PLAYER_INFO.whatsapp}`, '_blank');
+        window.open(`https://wa.me/${PLAYER_INFO.whatsapp.replace(/\D/g, '')}`, '_blank');
     };
 
     return (

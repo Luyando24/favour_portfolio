@@ -11,7 +11,7 @@ export const PLAYER_INFO = {
     tagline: 'Motivated, physically fit, and creative footballer committed to excellence.',
     email: 'gentlegentlemoon@gmail.com / sofwan@rihlasoccer.com',
     phone: '(+86) 18536223834',
-    whatsapp: '(+86) 18536223834',
+    whatsapp: '+1 (626) 200-3339',
     instagram: 'https://www.instagram.com/Favour_gentle',
     youtube: '', // No YouTube provided
     heroImage: '/images/cover.jpeg',

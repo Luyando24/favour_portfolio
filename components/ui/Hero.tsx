@@ -42,25 +42,29 @@ export default function Hero({
 
     return (
         <section ref={ref} className="relative h-screen min-h-[800px] flex items-center overflow-hidden">
-            {/* Background Image with Parallax */}
-            <motion.div 
-                style={{ y: backgroundY }}
-                className="absolute inset-0 z-0"
+            {/* Background Image - Full View */}
+            <div 
+                className="absolute inset-0 z-0 bg-black"
             >
                 <Image
                     src={backgroundImage}
                     alt={PLAYER_INFO.fullName}
                     fill
-                    className="object-cover"
+                    className="object-contain object-center"
                     priority
                     quality={90}
                 />
                 {/* Modern Gradient Overlay - Lighter for visibility */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/30 to-transparent z-10"></div>
                 <div className="absolute inset-0 bg-hero-gradient opacity-20 z-10"></div>
+                
+                {/* Side Fade Gradients for Letterboxing */}
+                <div className="absolute inset-y-0 left-0 w-64 md:w-[50vw] bg-gradient-to-r from-black from-20% via-black/80 via-60% to-transparent z-10"></div>
+                <div className="absolute inset-y-0 right-0 w-64 md:w-[50vw] bg-gradient-to-l from-black from-20% via-black/80 via-60% to-transparent z-10"></div>
+
                 {/* Grid Pattern Overlay */}
                 <div className="absolute inset-0 bg-grid-pattern opacity-10 z-10 pointer-events-none"></div>
-            </motion.div>
+            </div>
 
             {/* Content */}
             <motion.div 

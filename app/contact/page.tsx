@@ -118,7 +118,7 @@ export default async function ContactPage() {
                                     For urgent inquiries or quick questions, reach out via WhatsApp.
                                 </p>
                                 <a
-                                    href={`https://wa.me/${displayInfo.whatsapp}`}
+                                    href={`https://wa.me/${displayInfo.whatsapp.replace(/\D/g, '')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center space-x-2 bg-white text-green-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all"
