@@ -1,12 +1,27 @@
+'use client';
+
 import Link from 'next/link';
 import { Instagram, Youtube, MessageCircle, Mail, MapPin } from 'lucide-react';
 import { PLAYER_INFO, NAV_ITEMS } from '@/lib/constants';
-import { getPlayerInfo } from '@/lib/supabase';
+import { getPlayerInfo, PlayerInfo } from '@/lib/supabase';
 import SocialButton from '@/components/ui/SocialButton';
+import { useEffect, useState } from 'react';
 
-export default async function Footer() {
+export default function Footer() {
     const currentYear = new Date().getFullYear();
-    const dbPlayerInfo = await getPlayerInfo();
+    const [dbPlayerInfo, setDbPlayerInfo] = useState<PlayerInfo | null>(null);
+
+    useEffect(() => {
+        const fetchInfo = async () => {
+            try {
+                const info = await getPlayerInfo();
+                setDbPlayerInfo(info);
+            } catch (error) {
+                console.warn('Failed to fetch player info for footer:', error);
+            }
+        };
+        fetchInfo();
+    }, []);
     
     const displayInfo = {
         fullName: dbPlayerInfo?.full_name || PLAYER_INFO.fullName,
