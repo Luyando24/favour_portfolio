@@ -17,6 +17,12 @@ export default function VideoGalleryPage() {
     const [videos, setVideos] = useState<GalleryVideo[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const getYouTubeId = (url: string) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
     useEffect(() => {
         const fetchVideos = async () => {
             const { data } = await supabase
@@ -118,28 +124,46 @@ export default function VideoGalleryPage() {
                                 >
                                     <div className="relative aspect-video bg-black overflow-hidden">
                                         {playingVideo === video.id ? (
-                                            <video
-                                                controls
-                                                autoPlay
-                                                className="w-full h-full"
-                                                onEnded={() => setPlayingVideo(null)}
-                                            >
-                                                <source src={video.url} type="video/mp4" />
-                                                Your browser does not support the video tag.
-                                            </video>
+                                            getYouTubeId(video.url) ? (
+                                                <iframe
+                                                    src={`https://www.youtube.com/embed/${getYouTubeId(video.url)}?autoplay=1`}
+                                                    title={video.title}
+                                                    className="w-full h-full"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowFullScreen
+                                                />
+                                            ) : (
+                                                <video
+                                                    controls
+                                                    autoPlay
+                                                    className="w-full h-full"
+                                                    onEnded={() => setPlayingVideo(null)}
+                                                >
+                                                    <source src={video.url} type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            )
                                         ) : (
                                             <button
                                                 onClick={() => setPlayingVideo(video.id)}
                                                 className="absolute inset-0 flex items-center justify-center group/btn w-full h-full"
                                             >
                                                 {/* Video Preview */}
-                                                <video
-                                                    src={video.url}
-                                                    className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/btn:opacity-40 transition-opacity duration-500"
-                                                    preload="metadata"
-                                                    muted
-                                                    playsInline
-                                                />
+                                                {getYouTubeId(video.url) ? (
+                                                    <img 
+                                                        src={`https://img.youtube.com/vi/${getYouTubeId(video.url)}/hqdefault.jpg`} 
+                                                        className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/btn:opacity-40 transition-opacity duration-500"
+                                                        alt={video.title}
+                                                    />
+                                                ) : (
+                                                    <video
+                                                        src={video.url}
+                                                        className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/btn:opacity-40 transition-opacity duration-500"
+                                                        preload="metadata"
+                                                        muted
+                                                        playsInline
+                                                    />
+                                                )}
                                                 
                                                 {/* Play Button */}
                                                 <div className="relative z-10 w-20 h-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center group-hover/btn:scale-110 transition-transform duration-300 group-hover/btn:bg-benfica-red group-hover/btn:border-benfica-red shadow-2xl">
